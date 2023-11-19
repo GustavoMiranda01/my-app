@@ -46,8 +46,10 @@ function Orders() {
           {orders.map((order) => (
             <Order key={order.id}>
               <div className="paragrafos">
-                <p style={{ marginBottom: '40px' }}>{order.order}</p>
-                <p>{order.name}</p>
+                <p style={{ marginBottom: "40px" }}>{order.order}</p>
+                <p>
+                  <strong>{order.name}</strong>
+                </p>
               </div>
               <button onClick={() => deleteOrder(order.id)}>
                 <img src={Trash} alt="Lata-de-Lixo" />
