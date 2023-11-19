@@ -55,13 +55,12 @@ export const H1 = styled.h1`
   margin-bottom: 80px;
 `;
 
-
 export const Button = styled.button`
   width: 342px;
   height: 74px;
   margin-top: 10%;
 
-  background: #D93856;
+  background: #d93856;
   border-radius: 14px;
   border: none;
 
@@ -97,18 +96,23 @@ export const Order = styled.li`
   border-radius: 14px;
 
   width: 342px;
-  height: 58px;
+  height: 130px;
 
   border: none;
   outline: none;
 
-  p {
+  .paragrafos {
+    
+    display: flex;
+    flex-direction: column;
     color: black;
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
     line-height: 28px;
   }
+
+  
 
   button {
     background: none;

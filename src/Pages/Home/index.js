@@ -1,9 +1,8 @@
 import React, { useState, useRef } from "react";
-
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 import Burger from "../../assets/burgerLogo.svg";
-
 
 import {
   Container,
@@ -17,27 +16,22 @@ import {
 
 function App() {
   const [orders, setOrders] = useState([]);
+  const history = useHistory();
   const inputOrder = useRef();
   const inputName = useRef();
 
   async function addNewOrders() {
-
-    // Função para conectar com o backend
-    // const { data: newOrder } = await axios.post("http://localhost:3001", {
-    //   order: inputOrder.current.value,
-    //   name: inputName.current.value,
-    // }); 
-
-    // setOrders([...orders, newOrder]); 
-
-    setOrders([
-      ...orders,
+    const { data: newOrder } = await axios.post(
+      "http://localhost:3001/orders",
       {
-        id: Math.random(),
         order: inputOrder.current.value,
         name: inputName.current.value,
-      },
-    ]);
+      }
+    );
+
+    setOrders([...orders, newOrder]);
+
+    history.push('/orders')
   }
 
   return (

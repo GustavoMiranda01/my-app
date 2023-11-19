@@ -1,63 +1,62 @@
 import React, { useState, useEffect } from "react";
-
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 import BagBurger from "../../assets/bagBurger.svg";
 import Trash from "../../assets/trash.svg";
 
-import {
-  Container,
-  Image,
-  ContainerIntens,
-  H1,
-  Button,
-  Order,
-} from "./styles";
+import { Container, Image, ContainerIntens, H1, Button, Order } from "./styles";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
+  const history = useHistory();
 
-  // Para importar os cadastros do backend
-  // useEffect(() => {
+  useEffect(() => {
+    async function fecthOrders() {
+      const { data: newOrders } = await axios.get(
+        "http://localhost:3001/orders"
+      );
 
-  //   async function fecthOrders(){
-  //     const { data: newOrders } = await axios.get("http://localhost:3001/orders")
+      setOrders(newOrders);
+    }
 
-  //     setOrders(newOrders);
-  //   }
+    fecthOrders();
+  }, []);
 
-  //   fecthOrders()
-  // }, [])
-
-  async function deleteUser(orderId) {
-
+  async function deleteOrder(orderId) {
     // Para deletar do backend
-    // await axios.delete(`http://localhost:3001/orders/${orderId}`)
+    await axios.delete(`http://localhost:3001/orders/${orderId}`);
 
     const newOrders = orders.filter((order) => order.id !== orderId);
 
     setOrders(newOrders);
   }
 
+  function goBackPage() {
+    history.goBack();
+  }
+
   return (
     <Container>
       <Image alt="Burger-Logo" src={BagBurger} />
       <ContainerIntens>
-        <H1>Pedidos</H1>    
+        <H1>Pedidos</H1>
 
         <ul>
           {orders.map((order) => (
             <Order key={order.id}>
-              <p>{order.order}</p> <p>{order.name}</p>
-              <button onClick={() => deleteUser(order.id)}>
+              <div className="paragrafos">
+                <p style={{ marginBottom: '40px' }}>{order.order}</p>
+                <p>{order.name}</p>
+              </div>
+              <button onClick={() => deleteOrder(order.id)}>
                 <img src={Trash} alt="Lata-de-Lixo" />
               </button>
             </Order>
           ))}
         </ul>
 
-        <Button >Voltar</Button>
-
+        <Button onClick={goBackPage}>Voltar</Button>
       </ContainerIntens>
     </Container>
   );
